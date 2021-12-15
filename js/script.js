@@ -1,7 +1,7 @@
 var n = document.getElementById("nvoip_callme_modal");
 
 function nvoip_callmeLoad() {
-    changeModal()
+    changeModal();
     $(document).ready(function () {
         $('[data-bs-toggle="popover"]').popover({});
     });
@@ -88,14 +88,14 @@ function nvoip_callmeEnter() {
     });
 }
 
-function changeModal(){
-    $('#modal').on('show', function () {
-        $(this).find('.modal-body').css({
+function changeModal() {
+    $("#modal").on("show", function () {
+        $(this).find(".modal-body").css({
             //    width:'auto', //probably not needed
-            //    height:'auto', //probably not needed 
+            //    height:'auto', //probably not needed
             //    'max-height':'100%'
         });
- });
+    });
 }
 
 function nvoip_callmeVerifyPhoneField() {
@@ -141,19 +141,9 @@ function nvoip_callmeAddEventListeners() {
                 this.style.borderColor = "red";
             }
         });
+    }
 
-    // var btn = document.getElementById("agendado");
-    // btn.addEventListener("click",function(){
-    //   if (document.getElementById("nvoip_callme_call-btn").value === "Me ligue agora"){
-    //     document.getElementById("nvoip_callme_call-btn").value = "Agendar ligação"
-    //   }  else {
-    //     document.getElementById("nvoip_callme_call-btn").value = "Me ligue agora"
-    //   }
-    // });
-}
 
-{
-}
 function nvoip_callmeCallScreen() {
     nvoip_callmeResetNumberInput();
     nvoip_callmeScheduleScreenOff();
@@ -203,15 +193,6 @@ function nvoip_callmeCallScreen() {
 }
 
 function getValue() {
-    //  if(document.getElementById("nvoip_callme_btn-call-screen").value == "Me ligue agora")
-    //  {
-    //   document.getElementById("nvoip_callme_btn-call-screen").value = "Inativo";
-    //  }
-    //  else
-    //  {
-    //   document.getElementById("nvoip_callme_btn-call-screen").value = "Ativo";
-    //  }
-
     nvoip_callmeScheduleScreen();
 }
 
@@ -292,13 +273,7 @@ function nvoip_callmeScheduleScreenUltimate() {
     // Escondendo mensagem de erro ao trocar para a tela de mensagem
     document.getElementById("nvoip_callme_div-error-message").style.display =
         "none";
-    // document.getElementById("nvoip_callme_call-btn").innerHTML = "Me ligue depois";
-    //   if (document.getElementById("nvoip_callme_call-btn").value === "Me ligue agora"){
-    //     document.getElementById("nvoip_callme_call-btn").value = "Agendar ligação"
-    //   }  else {
-    //     document.getElementById("nvoip_callme_call-btn").value = "Me ligue agora"
-    //   }
-    // };
+  
 
     btnScheduleScreen.disabled = true;
 
@@ -320,7 +295,7 @@ function nvoip_callmeLimitTextArea(value) {
     var resto = 0;
     var total = value.length;
     if (total <= quant) {
-        var resto = resto + total;
+        resto = resto + total;
         document.getElementById("nvoip_callme_count").innerHTML =
             resto + "/" + quant;
     } else {
@@ -342,8 +317,11 @@ function nvoip_callmeResetMessageInputs() {
     document.getElementById("nvoip_callme_input-email").value = "";
     document.getElementById("nvoip_callme_input-name").value = "";
     document.getElementById("nvoip_callme_count").innerHTML = "0/250";
+    document.getElementById("date").value = "";
+    document.getElementById("time").value = "";
 }
-// TODO VALIDAÇÕES E LIMPAR CAMPOS
+//  VALIDAÇÕES E LIMPAR CAMPOS
+
 function nvoip_callmeResetModal() {
     document.getElementById("nvoip_callme_btn-call-screen").disabled = true;
     document.getElementById("nvoip_callme_btn-message-screen").disabled = false;
@@ -366,7 +344,7 @@ function nvoip_callmeResetModal() {
         $("#nvoip_callme_view-call").show();
     }, 300);
 
-    answered = "";
+    var answered = "";
     nvoip_callmeResetNumberInput();
     nvoip_callmeResetMessageInputs();
 }
@@ -378,25 +356,6 @@ function nvoip_callmeResetFlux() {
     $("#nvoip_callme_modal-call-failed").hide();
 }
 
-function nvoip_callmeResetNumberInput() {
-    document.getElementById("phone").value = "";
-}
-
-function nvoip_callmeResetMessageInputs() {
-    document.getElementById("nvoip_callme_input-message").style.borderColor =
-        "";
-    document.getElementById("nvoip_callme_input-name").style.borderColor = "";
-    document.getElementById("nvoip_callme_input-email").style.borderColor = "";
-    document.getElementById("nvoip_callme_input-message").value = "";
-    document.getElementById("nvoip_callme_input-email").value = "";
-    document.getElementById("nvoip_callme_input-name").value = "";
-    document.getElementById("nvoip_callme_count").innerHTML = "0/250";
-}
-
-function nvoip_callmeResetMessageInputs() {
-    document.getElementById("date").value = "";
-    document.getElementById("time").value = "";
-}
 function nvoip_callmeTransition() {
     $("#nvoip_callme_modal-call-failed").hide();
     $("#nvoip_callme_modal-call-success").hide();
@@ -550,17 +509,14 @@ function nvoip_callmeVerifyCallNow() {
     }
 }
 
-// Verificar LIGAÇÃO AGENDADA
 
 function nvoip_callmeVerifyScheduledCall() {
-
     var horaAtual = new Date();
     var dateField = document.getElementById("date");
     console.log("DATAAAAAAAAAAAAAAAAAAAAAAAA", dateField);
     var timeField = document.getElementById("time");
     var timeFieldSplit = timeField.value.split(":");
-    
-    
+
     var count = 0;
     var inputPhone = document.getElementById("phone");
 
@@ -604,40 +560,19 @@ function nvoip_callmeVerifyScheduledCall() {
                 console.log(horaAtual.getMinutes());
             }
         }
-    } else if (new Date(dateField.value).getDate() + 1 > horaAtual.getDate()) {
+    } else if (
+        new Date(dateField.value).getDate() + 1 > horaAtual.getDate() ||
+        new Date(dateField.value).getDate() + 1 < horaAtual.getDate()
+    ) {
         timeField.style.borderColor = "";
         count += 1;
-    }else
-    {
+    } else {
+        console.log("ELSE231");
         timeField.style.border = "1px solid #FF0000 ";
-        }
-        
-        
-    
-    // if (inputTime.value == "" || inputTime < 4) {
-    //     inputTime.style.borderColor =
-    //         "red";
-    // } else {
-    //     inputTime.style.borderColor = "";
-
-    //     count += 1;
-    // }
+    }
 
     if (count === 3) {
         nvoip_callmeFluxTransitionScheduleSuccess();
-    }
-}
-
-function nvoip_callmeLimitTextArea(value) {
-    var quant = 250;
-    var resto = 0;
-    var total = value.length;
-    if (total <= quant) {
-        var resto = resto + total;
-        document.getElementById("nvoip_callme_count").innerHTML =
-            resto + "/" + quant;
-    } else {
-        document.getElementById("input").value = value.substr(0, quant);
     }
 }
 
@@ -666,25 +601,6 @@ function nvoip_callmeVerifyDate() {
     document.getElementsById("date")[0].setAttribute("min", today);
 }
 
-// HORA //
-
-// function nvoip_callmeVerifyDate() {
-//   var dateInput= document.getElementById("nvoip_callme").value;
-
-// var today = new Date();
-
-//     var month = today.getMonth() + 1;
-//     var day = today.getDay();
-//     var year = today.getYear();
-//     if(month < 10)
-//         month = '0' + month.toString();
-//     if(day < 10)
-//         day = '0' + day.toString();
-
-//     var maxDate = year + '-' + month + '-' + day;
-//     alert(maxDate);
-//     $('#txtDate').attr('min', maxDate);
-// }
 
 function nvoip_callmeValidateDateField() {
     var dateField = document.getElementById("date");
@@ -709,28 +625,26 @@ function nvoip_callmeValidateTimeField() {
     var timeFieldSplit = timeField.value.split(":");
     console.log("DATEFIELD", new Date(dateField.value).getDate() + 1);
     console.log("HORAFIELD", horaAtual.getDate());
-    if (new Date(dateField.value).getDate() + 1 === horaAtual.getDate()) {
+    if (new Date(dateField.value).getDate() + 1 === horaAtual.getDay()) {
         console.log("ENTROU NO PRIMEIRO IF");
         if (timeFieldSplit[0] !== "00") {
             console.log("ENTROU NO SEGUNDO IF");
             console.log(Number(timeFieldSplit[0]));
             console.log(horaAtual.getHours());
-            
+
             if (
                 Number(timeFieldSplit[0]) > horaAtual.getHours() ||
                 (Number(timeFieldSplit[0]) === horaAtual.getHours() &&
                     Number(timeFieldSplit[1]) > horaAtual.getMinutes())
             ) {
                 timeField.style.borderColor = "";
-            } else {
-                console.log("Entrou no elsezão?");
-                timeField.style.border = "1px solid #FF0000 ";
-                console.log(timeField);
-                console.log(Number(timeFieldSplit[1]));
-                console.log(horaAtual.getMinutes());
             }
+           
         }
-    }
+    } else if (new Date(dateField.value).getDate() + 1 > horaAtual.getDate()) {
+        timeField.style.borderColor = "";
+        count += 1;
 
-    console.log(timeField.value);
+        console.log(timeField.value);
+    }
 }

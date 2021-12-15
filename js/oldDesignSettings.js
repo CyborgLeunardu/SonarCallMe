@@ -365,4 +365,3 @@
     changeLoading();
   }
 
-  // callFunctions();

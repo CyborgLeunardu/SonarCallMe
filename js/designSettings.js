@@ -261,7 +261,7 @@ function nvoip_callmeLoadDesignSettings() {
     required: true,
   };
 
-  elements = [
+ const elements = [
     popover,
     disabledButtonHeader,
     enableButtonHeader,

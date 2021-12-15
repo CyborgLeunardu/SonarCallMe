@@ -12,19 +12,21 @@ globalThis.interval = "";
 let uuid = "";
 var date = "";
 var time = "";
-
+var data = "";
+var horaFormatada = "";
+var xhr = "";
 
 nvoip_callmeGenerateToken();
 
 function nvoip_callmeGenerateToken() {
-    var data =
+        data =
         "username=" +
         numberSip +
         "&password=" +
         userToken +
         "&grant_type=password";
 
-    var xhr = new XMLHttpRequest();
+    xhr = new XMLHttpRequest();
 
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
@@ -48,156 +50,129 @@ function nvoip_callmeGenerateToken() {
     xhr.send(data);
 }
 
-const toTimestamp = (strDate) => {  
-  let dt = new Date(strDate);  
-  dt.setHours(dt.getHours() + 3);
-  return dt;  
-}
-
-
+const toTimestamp = (strDate) => {
+    let dt = new Date(strDate);
+    dt.setHours(dt.getHours() + 3);
+    return dt;
+};
 
 function nvoip_callmeMakeCall() {
-
     date = document.getElementById("date").value;
-    // date = dateFormatada[2] + "-" + dateFormatada[1] + "-" + dateFormatada[0];
     hour = document.getElementById("time").value;
-    var horaFormatada = hour + ":00";
+    horaFormatada = hour + ":00";
     hour = horaFormatada;
-    // var dataHora = toTimestamp(date + " " + horaFormatada);
-    // console.log("DATAHORAAAAAAAAAAAAAAUAHAUHUA ", dataHora);
     console.log(date + " " + horaFormatada);
 
-    if (nvoip_callme_config.internationalCalls === true){ 
-    let number = document.getElementById("phone").value;
-    let numberDDI = document.getElementsByClassName(
-        "iti__selected-dial-code"
-    )[0].innerHTML;
-    console.log(numberDDI);
-    number = (numberDDI + number)
-        .replace("(", "")
-        .replace(")", "")
-        .replace("-", "")
-        .replace(" ", "")
-        .replace("+", "");
-    
+    if (nvoip_callme_config.internationalCalls === true) {
+        let number = document.getElementById("phone").value;
+        let numberDDI = document.getElementsByClassName(
+            "iti__selected-dial-code"
+        )[0].innerHTML;
+        console.log(numberDDI);
+        number = (numberDDI + number)
+            .replace("(", "")
+            .replace(")", "")
+            .replace("-", "")
+            .replace(" ", "")
+            .replace("+", "");
 
-
-
-        if ($('#nvoip_callme_call-btn').hasClass('nvoip_callme_btn-schedule')){
-           var dateHour = toTimestamp(date + " " + horaFormatada)
-           console.log("ENTROU IF", dateHour)
-           
-            
-        }else if ($('#nvoip_callme_call-btn').hasClass('nvoip_callme_btn-now')){
-            dateHour = ""; 
-            console.log("ENTROU ELSE", dateHour)
+        if ($("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-schedule")) {
+            var dateHour = toTimestamp(date + " " + horaFormatada);
+            console.log("ENTROU IF", dateHour);
+        } else if (
+            $("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-now")
+        ) {
+            dateHour = "";
+            console.log("ENTROU ELSE", dateHour);
         }
 
-    var data = JSON.stringify({
-        caller: caller,
-        called: number,
-        transferNumber: transferNumber,
-        dateHour : dateHour
-    
-        // dateHour : "";
+        data = JSON.stringify({
+            caller: caller,
+            called: number,
+            transferNumber: transferNumber,
+            dateHour: dateHour,
 
-    });
-    console.log(number);
-    console.log("DATEHOUR",dateHour)
-    
+            // dateHour : "";
+        });
+        console.log(number);
+        console.log("DATEHOUR", dateHour);
 
-    var xhr = new XMLHttpRequest();
+        xhr = new XMLHttpRequest();
 
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                var json = this.response;
+                console.log("RESPONSE CARAI", this.response);
 
-    xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-            // console.log("Status:", this.status);
-            // console.log("Headers:", this.getAllResponseHeaders());
-            // console.log("Body:", this.responseText);
-            var json = this.response;
-            console.log("RESPONSE CARAI", this.response);
-            
-            var obj = JSON.parse(JSON.stringify(json));
-            console.log("OBJJJJJJ", obj);
-            uuid = obj.replace("uuid: ", "");
-            
-        }
-    });
-} else{
-    date = document.getElementById("date").value;
-    // date = dateFormatada[2] + "-" + dateFormatada[1] + "-" + dateFormatada[0];
-    hour = document.getElementById("time").value;
-    var horaFormatada = hour + ":00";
-    hour = horaFormatada;
-    // var dataHora = toTimestamp(date + " " + horaFormatada);
-    // console.log("DATAHORAAAAAAAAAAAAAAUAHAUHUA ", dataHora);
-    console.log(date + " " + horaFormatada);
+                var obj = JSON.parse(JSON.stringify(json));
+                console.log("OBJJJJJJ", obj);
+                uuid = obj.replace("uuid: ", "");
+            }
+        });
+    } else {
+        date = document.getElementById("date").value;
+        hour = document.getElementById("time").value;
+        horaFormatada = hour + ":00";
+        hour = horaFormatada;
+        console.log(date + " " + horaFormatada);
 
+        let number = document.getElementById("phone").value;
 
-    let number = document.getElementById("phone").value;
+        number = number
+            .replace("(", "")
+            .replace(")", "")
+            .replace("-", "")
+            .replace(" ", "")
+            .replace("+", "");
 
-    number = (number)
-        .replace("(", "")
-        .replace(")", "")
-        .replace("-", "")
-        .replace(" ", "")
-        .replace("+", "");
-    
-
-
-
-        if ($('#nvoip_callme_call-btn').hasClass('nvoip_callme_btn-schedule')){
-           var dateHour = toTimestamp(date + " " + horaFormatada)
-           console.log("ENTROU IF", dateHour)
-           
-            
-        }else if ($('#nvoip_callme_call-btn').hasClass('nvoip_callme_btn-now')){
-            dateHour = ""; 
-            console.log("ENTROU ELSE", dateHour)
+        if ($("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-schedule")) {
+            dateHour = toTimestamp(date + " " + horaFormatada);
+            console.log("ENTROU IF", dateHour);
+        } else if (
+            $("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-now")
+        ) {
+            dateHour = "";
+            console.log("ENTROU ELSE", dateHour);
         }
 
-    var data = JSON.stringify({
-        caller: caller,
-        called: number,
-        transferNumber: transferNumber,
-        dateHour : dateHour
-    
-        // dateHour : "";
+        data = JSON.stringify({
+            caller: caller,
+            called: number,
+            transferNumber: transferNumber,
+            dateHour: dateHour,
 
-    });
-    console.log(number);
-    console.log("DATEHOUR",dateHour)
-    
+            // dateHour : "";
+        });
+        console.log(number);
+        console.log("DATEHOUR", dateHour);
 
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-            // console.log("Status:", this.status);
-            // console.log("Headers:", this.getAllResponseHeaders());
-            // console.log("Body:", this.responseText);
-            var json = this.response;
-            console.log("RESPONSE CARAI", this.response);
-            
-            var obj = JSON.parse(JSON.stringify(json));
-            console.log("OBJJJJJJ", obj);
-            uuid = obj.replace("uuid: ", "");
-            
-        }
-    });
-}
+        xhr = new XMLHttpRequest();
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log("Status:", this.status);
+                console.log("Headers:", this.getAllResponseHeaders());
+                console.log("Body:", this.responseText);
+                var json = this.response;
+                console.log("RESPONSE CARAI", this.response);
+
+                var obj = JSON.parse(JSON.stringify(json));
+                console.log("OBJJJJJJ", obj);
+                uuid = obj.replace("uuid: ", "");
+            }
+        });
+    }
 
     xhr.open("POST", "https://api.nvoip.com.br/v2-devs/torpedo/callme");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Authorization", "Bearer " + oauth);
 
     xhr.send(data);
-    console.log("data: ",data);
+    console.log("data: ", data);
 }
 
-
 function nvoip_callmeCheckAuth() {
-    var data = "token=" + oauth;
-    var xhr = new XMLHttpRequest();
+    data = "token=" + oauth;
+    xhr = new XMLHttpRequest();
 
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
@@ -228,8 +203,8 @@ function nvoip_callmeCheckToken() {
         document.getElementById("phone").focus();
         return false;
     } else {
-        var data = "token=" + oauth;
-        var xhr = new XMLHttpRequest();
+        data = "token=" + oauth;
+        xhr = new XMLHttpRequest();
 
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
@@ -267,14 +242,14 @@ function nvoip_callmeCheckToken() {
 }
 
 function nvoip_callmeSendEmail() {
-    var data = JSON.stringify({
+    data = JSON.stringify({
         ownerEmail: cfg.ownerEmail,
         userEmail: document.getElementById("nvoip_callme_input-email").value,
         userName: document.getElementById("nvoip_callme_input-name").value,
         message: document.getElementById("nvoip_callme_input-message").value,
     });
 
-    var xhr = new XMLHttpRequest();
+    xhr = new XMLHttpRequest();
 
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
