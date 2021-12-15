@@ -344,7 +344,7 @@ function nvoip_callmeResetModal() {
         $("#nvoip_callme_view-call").show();
     }, 300);
 
-    var answered = "";
+   
     nvoip_callmeResetNumberInput();
     nvoip_callmeResetMessageInputs();
 }
@@ -513,10 +513,8 @@ function nvoip_callmeVerifyCallNow() {
 function nvoip_callmeVerifyScheduledCall() {
     var horaAtual = new Date();
     var dateField = document.getElementById("date");
-    console.log("DATAAAAAAAAAAAAAAAAAAAAAAAA", dateField);
     var timeField = document.getElementById("time");
     var timeFieldSplit = timeField.value.split(":");
-
     var count = 0;
     var inputPhone = document.getElementById("phone");
 
@@ -540,11 +538,7 @@ function nvoip_callmeVerifyScheduledCall() {
     }
 
     if (new Date(dateField.value).getDate() + 1 === horaAtual.getDate()) {
-        console.log("ENTROU NO PRIMEIRO IF");
         if (timeFieldSplit[0] !== "00") {
-            console.log("ENTROU NO SEGUNDO IF");
-            console.log(Number(timeFieldSplit[0]));
-            console.log(horaAtual.getHours());
             if (
                 Number(timeFieldSplit[0]) > horaAtual.getHours() ||
                 (Number(timeFieldSplit[0]) === horaAtual.getHours() &&
@@ -567,7 +561,6 @@ function nvoip_callmeVerifyScheduledCall() {
         timeField.style.borderColor = "";
         count += 1;
     } else {
-        console.log("ELSE231");
         timeField.style.border = "1px solid #FF0000 ";
     }
 
@@ -618,6 +611,7 @@ function nvoip_callmeValidateDateField() {
 }
 
 function nvoip_callmeValidateTimeField() {
+    var count = ""
     var horaAtual = new Date();
     var dateField = document.getElementById("date");
     console.log("DATAAAAAAAAAAAAAAAAAAAAAAAA", dateField);
@@ -626,25 +620,17 @@ function nvoip_callmeValidateTimeField() {
     console.log("DATEFIELD", new Date(dateField.value).getDate() + 1);
     console.log("HORAFIELD", horaAtual.getDate());
     if (new Date(dateField.value).getDate() + 1 === horaAtual.getDay()) {
-        console.log("ENTROU NO PRIMEIRO IF");
         if (timeFieldSplit[0] !== "00") {
-            console.log("ENTROU NO SEGUNDO IF");
-            console.log(Number(timeFieldSplit[0]));
-            console.log(horaAtual.getHours());
-
             if (
                 Number(timeFieldSplit[0]) > horaAtual.getHours() ||
                 (Number(timeFieldSplit[0]) === horaAtual.getHours() &&
                     Number(timeFieldSplit[1]) > horaAtual.getMinutes())
             ) {
                 timeField.style.borderColor = "";
-            }
-           
+            }   
         }
     } else if (new Date(dateField.value).getDate() + 1 > horaAtual.getDate()) {
         timeField.style.borderColor = "";
         count += 1;
-
-        console.log(timeField.value);
     }
 }

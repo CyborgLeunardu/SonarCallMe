@@ -11,15 +11,17 @@ var answered = false;
 globalThis.interval = "";
 let uuid = "";
 var date = "";
+var hour = "";
 var time = "";
 var data = "";
+var dateHour = "";
 var horaFormatada = "";
 var xhr = "";
 
 nvoip_callmeGenerateToken();
 
 function nvoip_callmeGenerateToken() {
-        data =
+    data =
         "username=" +
         numberSip +
         "&password=" +
@@ -77,7 +79,7 @@ function nvoip_callmeMakeCall() {
             .replace("+", "");
 
         if ($("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-schedule")) {
-            var dateHour = toTimestamp(date + " " + horaFormatada);
+            dateHour = toTimestamp(date + " " + horaFormatada);
             console.log("ENTROU IF", dateHour);
         } else if (
             $("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-now")
@@ -91,8 +93,6 @@ function nvoip_callmeMakeCall() {
             called: number,
             transferNumber: transferNumber,
             dateHour: dateHour,
-
-            // dateHour : "";
         });
         console.log(number);
         console.log("DATEHOUR", dateHour);
@@ -127,12 +127,10 @@ function nvoip_callmeMakeCall() {
 
         if ($("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-schedule")) {
             dateHour = toTimestamp(date + " " + horaFormatada);
-            console.log("ENTROU IF", dateHour);
         } else if (
             $("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-now")
         ) {
             dateHour = "";
-            console.log("ENTROU ELSE", dateHour);
         }
 
         data = JSON.stringify({
@@ -140,8 +138,6 @@ function nvoip_callmeMakeCall() {
             called: number,
             transferNumber: transferNumber,
             dateHour: dateHour,
-
-            // dateHour : "";
         });
         console.log(number);
         console.log("DATEHOUR", dateHour);
@@ -210,7 +206,7 @@ function nvoip_callmeCheckToken() {
             if (this.readyState === 4) {
                 var json = this.response;
                 var obj = JSON.parse(json);
-                if (obj.error != undefined) {
+                if (obj.error != undefined ) {
                     if (
                         obj.error === "invalid_grant" ||
                         obj.error === "invalid_token"

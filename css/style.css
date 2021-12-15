@@ -933,11 +933,6 @@
       width: 100%;
   }
 
-  .nvoip_callme_modal-footer {
-      margin-top: 0px;
-      
-  }
-
   .nvoip_callme_view-call input:first-of-type{
       margin-bottom: 10px;
   }
