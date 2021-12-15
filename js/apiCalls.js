@@ -70,7 +70,6 @@ function nvoip_callmeMakeCall() {
         let numberDDI = document.getElementsByClassName(
             "iti__selected-dial-code"
         )[0].innerHTML;
-        console.log(numberDDI);
         number = (numberDDI + number)
             .replace("(", "")
             .replace(")", "")
@@ -80,12 +79,10 @@ function nvoip_callmeMakeCall() {
 
         if ($("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-schedule")) {
             dateHour = toTimestamp(date + " " + horaFormatada);
-            console.log("ENTROU IF", dateHour);
         } else if (
             $("#nvoip_callme_call-btn").hasClass("nvoip_callme_btn-now")
         ) {
             dateHour = "";
-            console.log("ENTROU ELSE", dateHour);
         }
 
         data = JSON.stringify({
@@ -102,10 +99,7 @@ function nvoip_callmeMakeCall() {
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 var json = this.response;
-                console.log("RESPONSE CARAI", this.response);
-
                 var obj = JSON.parse(JSON.stringify(json));
-                console.log("OBJJJJJJ", obj);
                 uuid = obj.replace("uuid: ", "");
             }
         });
@@ -161,7 +155,6 @@ function nvoip_callmeMakeCall() {
     xhr.open("POST", "https://api.nvoip.com.br/v2-devs/torpedo/callme");
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Authorization", "Bearer " + oauth);
-
     xhr.send(data);
     console.log("data: ", data);
 }
@@ -206,7 +199,7 @@ function nvoip_callmeCheckToken() {
             if (this.readyState === 4) {
                 var json = this.response;
                 var obj = JSON.parse(json);
-                if (obj.error != undefined ) {
+                if (obj.error != undefined) {
                     if (
                         obj.error === "invalid_grant" ||
                         obj.error === "invalid_token"

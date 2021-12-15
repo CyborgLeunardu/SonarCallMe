@@ -100,11 +100,8 @@ function changeModal() {
 
 function nvoip_callmeVerifyPhoneField() {
     if ($("#phone").hasClass("nvoip_callme_phone_now")) {
-        console.log("ENTROU NO IF DO VERIFY CALL");
-
         nvoip_callmeVerifyCallNow();
     } else {
-        console.log("ENTROU NESSE ELSE AQUI?");
         nvoip_callmeVerifyScheduledCall();
     }
 }
@@ -404,7 +401,6 @@ function nvoip_callmeFluxTransitionCallNowSuccess() {
     if (res) {
         nvoip_callmeCheckAuth();
     }
-    console.log("entrou no call");
     $("#nvoip_callme_first-page").fadeOut(500);
     setTimeout(function () {
         console.log($("#nvoip_callme_modal-call-success"));
@@ -547,11 +543,9 @@ function nvoip_callmeVerifyScheduledCall() {
                 timeField.style.borderColor = "";
                 count += 1;
             } else {
-                console.log("Entrou no elsezão?");
+              
                 timeField.style.border = "1px solid #FF0000 ";
-                console.log(timeField);
-                console.log(Number(timeFieldSplit[1]));
-                console.log(horaAtual.getMinutes());
+            
             }
         }
     } else if (
@@ -601,12 +595,11 @@ function nvoip_callmeValidateDateField() {
         dateField.value.trim().length > 6 &&
         Date.parse(dateField.value) >= Date.now() - 86400000
     ) {
-        console.log("AQUI TÁ O DATEFIELD", dateField.value);
+        
         dateField.style.borderColor = "";
     } else {
         dateField.style.borderColor = "red";
-        console.log(dateField.value);
-        console.log(Date.now());
+        
     }
 }
 
@@ -614,11 +607,9 @@ function nvoip_callmeValidateTimeField() {
     var count = ""
     var horaAtual = new Date();
     var dateField = document.getElementById("date");
-    console.log("DATAAAAAAAAAAAAAAAAAAAAAAAA", dateField);
+   
     var timeField = document.getElementById("time");
     var timeFieldSplit = timeField.value.split(":");
-    console.log("DATEFIELD", new Date(dateField.value).getDate() + 1);
-    console.log("HORAFIELD", horaAtual.getDate());
     if (new Date(dateField.value).getDate() + 1 === horaAtual.getDay()) {
         if (timeFieldSplit[0] !== "00") {
             if (
